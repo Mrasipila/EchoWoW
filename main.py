@@ -18,11 +18,8 @@ if __name__ == "__main__":
     #keyboard_recorder = Keys_Recorder()
 
 
-    #mouse_recorder.record().start()
-    #screen_recorder.record().start()
+    mouse_recorder.record().start()
+    screen_recorder.record().start()
 
-    launcher = Launcher()
-
-    #launcher.launch_m(screen_recorder)
-    launcher.launch(mouse_recorder)
-
+    mouse_recorder.record().join()
+    screen_recorder.record().join()

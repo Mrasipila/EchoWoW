@@ -1,23 +1,23 @@
-from recorder.abstract_recorder_m import Recorder_m
+from recorder.abstract_recorder import Recorder
 import pyautogui
 import cv2
 import numpy as np
 import threading
 
 
-class Screen_Recorder(Recorder_m):
+class Screen_Recorder(Recorder):
 
     def __init__(self):
         self.thread = threading.Thread(target=self.process)
+        self.stopped = False
 
-    def record_m(self):
+    def record(self):
         return self.thread
 
-    def join_m(self):
-        self.thread.join()
-
-    @staticmethod
-    def process():
+    def get_running(self):
+        return self.stopped
+    
+    def process(self):
         # Specify resolution
         resolution = (1280, 720)
 
@@ -62,6 +62,7 @@ class Screen_Recorder(Recorder_m):
 
             # Stop recording when we press 'q'
             if  cv2.waitKey(1) == ord('q'):
+                self.stopped = True
                 break
 
         # downloding the video
