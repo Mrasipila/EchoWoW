@@ -1,33 +1,23 @@
-from abstract_recorder import *
+from recorder.abstract_recorder import Recorder
+from pynput import keyboard
 import time
-from pynput import mouse
 
 
-class Keys_Recorder(AbstractRecorder):
+class Keys_Recorder(Recorder):
+
+    def __init__(self):
+        self.instance = keyboard.Listener(on_press=self.on_press)
 
     # return a thread of the executing processes
     def record(self):
-        # ...or, in a non-blocking fashion:
-        listener = mouse.Listener(
-            on_move=self.on_move,
-            on_click=self.on_click,
-            on_scroll=self.on_scroll)
-        return listener
+        return self.instance
 
     # overridden methods of the library pynput
-    def on_move(x, y):
-        print('Pointer moved to {0}'.format(
-            (x, y)))
-
-    def on_click(x, y, button, pressed):
-        print('{0} at {1}'.format(
-            'Pressed' if pressed else 'Released',
-            (x, y)))
-        if not pressed:
-            # Stop listener
-            return False
-
-    def on_scroll(x, y, dx, dy):
-        print('Scrolled {0} at {1}'.format(
-            'down' if dy < 0 else 'up',
-            (x, y)))
+    @staticmethod
+    def on_press(key):
+        try:
+            print('alphanumeric key {0} pressed'.format(
+                key.char))
+        except AttributeError:
+            print('special key {0} pressed'.format(
+                key))

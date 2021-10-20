@@ -1,4 +1,3 @@
-# check the status of the screen record stopped attribute with the view to stop the other processes
 import threading
 from recorder.abstract_recorder import Recorder
 import time
@@ -6,7 +5,7 @@ import os
 import psutil
 
 
-
+# check the status of the screen record stopped attribute with the view to stop the other processes
 class Checker:
 
     # constructor
