@@ -1,19 +1,20 @@
-
-from recorder.abstract_recorder import Recorder
+from recorder.abstract_recorder_m import Recorder_m
 import pyautogui
 import cv2
 import numpy as np
 import threading
 
 
-class Screen_Recorder(Recorder):
+class Screen_Recorder(Recorder_m):
 
     def __init__(self):
         self.thread = threading.Thread(target=self.process)
-        self._stop_event = self.thread.Event()
 
-    def record(self):
+    def record_m(self):
         return self.thread
+
+    def join_m(self):
+        self.thread.join()
 
     @staticmethod
     def process():
@@ -60,7 +61,7 @@ class Screen_Recorder(Recorder):
             cv2.imshow('Live', frame)
 
             # Stop recording when we press 'q'
-            if cv2.waitKey(1) == ord('q'):
+            if  cv2.waitKey(1) == ord('q'):
                 break
 
         # downloding the video

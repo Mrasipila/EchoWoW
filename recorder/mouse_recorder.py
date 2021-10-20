@@ -1,4 +1,3 @@
-
 import time
 from pynput import mouse
 from recorder.abstract_recorder import Recorder
