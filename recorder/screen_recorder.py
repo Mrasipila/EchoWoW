@@ -4,6 +4,8 @@ import cv2
 import numpy as np
 import threading
 
+exit_key = 27
+
 
 class Screen_Recorder(Recorder):
 
@@ -49,7 +51,7 @@ class Screen_Recorder(Recorder):
             # Convert the screenshot to a numpy array
             frame = np.array(img)
 
-            # we scale down the screenshot to the desired resolution (variable resolution)
+            # Scale the screenshot of the monitor screen to the desired resolution of the program (variable resolution)
             dim = resolution
             frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
 
@@ -60,15 +62,15 @@ class Screen_Recorder(Recorder):
             # Write it to the output file
             full_video.append(frame)
 
-            # Optional: Display the recording screen
+            # Display the recording screen
             cv2.imshow('Live', frame)
 
-            # Stop recording when we press 'q'
-            if  cv2.waitKey(1) == ord('q'):
+            # Stop recording when we press 'ESC'
+            if  cv2.waitKey(1) == exit_key:
                 self.stopped = True
                 break
 
-        # downloding the video
+        # Downloading the video
         for i in range(len(full_video)):
             out.write(full_video[i])
 
