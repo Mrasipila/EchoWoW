@@ -7,7 +7,8 @@ from recorder.mouse_recorder import Mouse_recorder
 from recorder.launcher import Launcher
 from utils.csv_writer import CsvWriter
 import gc
-import cv2
+import datetime
+import csv
 
 #def start_thread(recorder: Recorder):
 #    recorder.start()
@@ -18,13 +19,22 @@ if __name__ == "__main__":
     # as a security we unable garbage collection
     gc.enable()
 
+    # time when the code launched
+
+    f = open('csvfiles/started_at.csv', 'w+')
+    writer = csv.writer(f, delimiter=" ")
+    writer.writerow(str(datetime.datetime.now().time()))
+    f.close()
+
+
     # we instantiate our classes
     screen_recorder = Screen_Recorder()
     mouse_recorder = Mouse_recorder()
     keyboard_recorder = Keys_Recorder()
 
     # we instantiate our recorder launcher
-    launcher = Launcher(screen_recorder, [keyboard_recorder])
+    # second argument should always start with keyboard_recorder followed with mouse_recorder
+    launcher = Launcher(screen_recorder, [keyboard_recorder, mouse_recorder])
 
     # launching out recorders
     launcher.launch(mouse_recorder)

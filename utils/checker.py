@@ -27,6 +27,7 @@ class Checker:
         if self.recorder.get_stopped():
             # saves the data
             self.csv_writer.save_keyboard_data()
+            self.csv_writer.save_mouse_data()
             # terminate the program process
             current_system_pid = os.getpid()
             this_system = psutil.Process(current_system_pid)

@@ -3,7 +3,11 @@ from abc import ABC, abstractmethod
 
 # Recorder for pynput thread object (mouse and keyboard)
 class Recorder(ABC):
-    data: list
+
+    def __init__(self):
+        self.data = None
+        self.data_click = None
+        self.data_scroll = None
 
     @abstractmethod
     def record(self):
