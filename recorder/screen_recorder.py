@@ -12,6 +12,7 @@ class Screen_Recorder(Recorder):
     def __init__(self):
         self.thread = threading.Thread(target=self.process)
         self.stopped = False
+        self.data = []
 
     def record(self):
         return self.thread

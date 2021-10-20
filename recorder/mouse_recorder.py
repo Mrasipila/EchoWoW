@@ -9,10 +9,14 @@ class Mouse_recorder(Recorder):
         self.instance = mouse.Listener(on_move=self.on_move,
                                        on_click=self.on_click,
                                        on_scroll=self.on_scroll)
+        self.data = []
 
     # return a thread of the executing processes
     def record(self):
         return self.instance
+
+    def get_stopped(self):
+        pass
 
     # overridden methods of the library pynput
     @staticmethod
