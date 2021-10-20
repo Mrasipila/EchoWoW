@@ -1,19 +1,43 @@
 import threading
-
+import sys
 # we import our public classes
-from recorder import Recorder
-from keys_recorder import Keys_Recorder
-from screen_recorder import Screen_Recorder
+# from recorder.keys_recorder import Keys_Recorder
+from recorder.screen_recorder import Screen_Recorder
+from recorder.mouse_recorder import Mouse_recorder
+from recorder.launcher import Launcher
+import gc
+import cv2
 
-# we create the function that takes as parameter our abstract class and execute the method record()
-def create_instance(recorder: Recorder):
-    return recorder.record
+#def start_thread(recorder: Recorder):
+#    recorder.start()
 
 
 if __name__ == "__main__":
-    # we launch our two threads executing their object (aka the record methods) corresponding to the child of the abstract class).
-    thread1 = threading.Thread(target=create_instance(Keys_Recorder))
-    thread2 = threading.Thread(target=create_instance(Screen_Recorder))
 
-    thread1.start()
-    thread2.start()
+    # as a security we unable garbage collection
+    gc.enable()
+
+    # we instantiate our classes
+    screen_recorder = Screen_Recorder()
+    mouse_recorder = Mouse_recorder()
+    #keyboard_recorder = Keys_Recorder()
+
+    # we instantiate our recorder launcher
+    launcher = Launcher(screen_recorder)
+
+    # launching out recorders
+    launcher.launch(mouse_recorder)
+    launcher.launch(screen_recorder)
+
+    # stopping the sequential execution of the code while the threads are running (join() method of thread)
+    launcher.stop_sequential(mouse_recorder)
+    launcher.stop_sequential(screen_recorder)
+
+    print("ended")
+    exit()
+    print("ended")
+    #mouse_recorder.record().start()
+    #screen_recorder.record().start()
+
+    #mouse_recorder.record().join()
+    #screen_recorder.record().join()

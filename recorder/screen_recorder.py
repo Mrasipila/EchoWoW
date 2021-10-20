@@ -1,19 +1,32 @@
-from recorder import Recorder
-import time
+from recorder.abstract_recorder import Recorder
 import pyautogui
 import cv2
 import numpy as np
+import threading
 
 
 class Screen_Recorder(Recorder):
 
-    def record():
+    def __init__(self):
+        self.thread = threading.Thread(target=self.process)
+        self.stopped = False
+
+    def record(self):
+        return self.thread
+
+    def get_stopped(self):
+        return self.stopped
+
+    def stop_thread(self):
+        pass
+
+    def process(self):
         # Specify resolution
         resolution = (1280, 720)
 
         # Specify video codec
         codec = cv2.VideoWriter_fourcc(*"mp4v")
-        filename = "Recording.mp4"
+        filename = "../Recording.mp4"
 
         # Specify frames rate.
         fps = 20.0
@@ -33,7 +46,6 @@ class Screen_Recorder(Recorder):
             # this screenshot is of dimension the resolution of the monitor
             img = pyautogui.screenshot()
 
-
             # Convert the screenshot to a numpy array
             frame = np.array(img)
 
@@ -48,12 +60,12 @@ class Screen_Recorder(Recorder):
             # Write it to the output file
             full_video.append(frame)
 
-
             # Optional: Display the recording screen
             cv2.imshow('Live', frame)
 
             # Stop recording when we press 'q'
-            if cv2.waitKey(1) == ord('q'):
+            if  cv2.waitKey(1) == ord('q'):
+                self.stopped = True
                 break
 
         # downloding the video
@@ -66,4 +78,4 @@ class Screen_Recorder(Recorder):
         # Destroy all windows
         cv2.destroyAllWindows()
 
-        print("job ended")
+        print("screen job ended")
