@@ -1,7 +1,7 @@
 import threading
 import sys
 # we import our public classes
-# from recorder.keys_recorder import Keys_Recorder
+from recorder.keys_recorder import Keys_Recorder
 from recorder.screen_recorder import Screen_Recorder
 from recorder.mouse_recorder import Mouse_recorder
 from recorder.launcher import Launcher
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     # we instantiate our classes
     screen_recorder = Screen_Recorder()
     mouse_recorder = Mouse_recorder()
-    #keyboard_recorder = Keys_Recorder()
+    keyboard_recorder = Keys_Recorder()
 
     # we instantiate our recorder launcher
     launcher = Launcher(screen_recorder)
@@ -28,14 +28,13 @@ if __name__ == "__main__":
     # launching out recorders
     launcher.launch(mouse_recorder)
     launcher.launch(screen_recorder)
+    launcher.launch(keyboard_recorder)
 
     # stopping the sequential execution of the code while the threads are running (join() method of thread)
     launcher.stop_sequential(mouse_recorder)
     launcher.stop_sequential(screen_recorder)
+    launcher.stop_sequential(keyboard_recorder)
 
-    print("ended")
-    exit()
-    print("ended")
     #mouse_recorder.record().start()
     #screen_recorder.record().start()
 

@@ -14,12 +14,6 @@ class Mouse_recorder(Recorder):
     def record(self):
         return self.instance
 
-    def get_stopped(self):
-        pass
-
-    def stop_thread(self):
-        self.record().stop()
-
     # overridden methods of the library pynput
     @staticmethod
     def on_move(x, y):

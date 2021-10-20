@@ -1,6 +1,7 @@
 from recorder.abstract_recorder import Recorder
 from utils.checker import Checker
 
+
 class Launcher:
 
     # The recorder stated in the constructor is supposed to be checked by the "checker" thread (master_recorder) to
