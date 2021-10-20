@@ -14,9 +14,12 @@ class Screen_Recorder(Recorder):
     def record(self):
         return self.thread
 
-    def get_running(self):
+    def get_stopped(self):
         return self.stopped
-    
+
+    def stop_thread(self):
+        pass
+
     def process(self):
         # Specify resolution
         resolution = (1280, 720)
@@ -76,4 +79,3 @@ class Screen_Recorder(Recorder):
         cv2.destroyAllWindows()
 
         print("screen job ended")
-

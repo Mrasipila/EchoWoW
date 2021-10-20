@@ -1,17 +1,22 @@
 from recorder.abstract_recorder import Recorder
+from utils.checker import Checker
 
 class Launcher:
 
-
-    def __init__(self):
-        self.launcher = None
+    # The recorder stated in the constructor is supposed to be checked by the "checker" thread (master_recorder) to
+    # see if it is running in order to stop the other recorders (slave_recorder).
+    def __init__(self, master_recorder: Recorder, slave_recorder: list[Recorder]):
+        self.checker = Checker(master_recorder, slave_recorder)
+        self.checker.get_thread().start()
 
     # Launcher for recorder
-    def launch(self, recorder: Recorder):
+    @staticmethod
+    def launch(recorder: Recorder):
         thread = recorder.record()
         thread.start()
 
     # stop the sequential execution of the code until release
-    def stop_sequential(self, recorder: Recorder):
+    @staticmethod
+    def stop_sequential(recorder: Recorder):
         thread = recorder.record()
         thread.join()
