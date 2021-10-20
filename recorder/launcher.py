@@ -1,8 +1,10 @@
-from recorder import Recorder
+from recorder.abstract_recorder import Recorder
 
 
 class Launcher:
 
-    @staticmethod
-    def launch(recorder: Recorder):
-        Recorder.record().start()
+    def __init__(self, recorder : Recorder):
+        self.launcher = Recorder.record()
+
+    def launch(self,recorder: Recorder):
+        Recorder.record(self).start()

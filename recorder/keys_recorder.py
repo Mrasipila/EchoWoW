@@ -1,9 +1,9 @@
-from recorder import *
+from abstract_recorder import *
 import time
 from pynput import mouse
 
 
-class Keys_Recorder(Recorder):
+class Keys_Recorder(AbstractRecorder):
 
     # return a thread of the executing processes
     def record(self):
