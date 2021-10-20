@@ -2,14 +2,17 @@
 import threading
 from recorder.abstract_recorder import Recorder
 import time
+import os
+import psutil
+
+
 
 class Checker:
 
     # constructor
-    def __init__(self, master_recorder: Recorder, slave_recorders : list[Recorder]):
+    def __init__(self, recorder: Recorder):
         self.thread = threading.Thread(target=self.check)
-        self.master_recorder = master_recorder
-        self.slave_recorders = slave_recorders
+        self.recorder = recorder
 
     # getter
     def get_thread(self):
@@ -18,10 +21,11 @@ class Checker:
     # checking if master has stopped, if true we close the program.
     def process(self):
         time.sleep(2)
-        if self.master_recorder.get_stopped():
-            for e in self.slave_recorders:
-                e.stop_thread()
-                e.
+        if self.recorder.get_stopped():
+            # terminate the program process
+            current_system_pid = os.getpid()
+            this_system = psutil.Process(current_system_pid)
+            this_system.terminate()
 
     # process executed by thread
     def check(self):

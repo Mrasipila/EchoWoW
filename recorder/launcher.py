@@ -5,8 +5,8 @@ class Launcher:
 
     # The recorder stated in the constructor is supposed to be checked by the "checker" thread (master_recorder) to
     # see if it is running in order to stop the other recorders (slave_recorder).
-    def __init__(self, master_recorder: Recorder, slave_recorder: list[Recorder]):
-        self.checker = Checker(master_recorder, slave_recorder)
+    def __init__(self, recorder: Recorder):
+        self.checker = Checker(recorder)
         self.checker.get_thread().start()
 
     # Launcher for recorder

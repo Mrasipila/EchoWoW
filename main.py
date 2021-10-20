@@ -23,7 +23,7 @@ if __name__ == "__main__":
     #keyboard_recorder = Keys_Recorder()
 
     # we instantiate our recorder launcher
-    launcher = Launcher(screen_recorder, [mouse_recorder])
+    launcher = Launcher(screen_recorder)
 
     # launching out recorders
     launcher.launch(mouse_recorder)
