@@ -17,11 +17,14 @@ if __name__ == "__main__":
     #keyboard_recorder = Keys_Recorder()
 
 
+    #mouse_recorder.record().start()
+    #screen_recorder.record().start()
 
     launcher = Launcher()
 
     launcher.launch(screen_recorder)
     launcher.launch(mouse_recorder)
+    #mouse_launcher.launch(mouse_recorder)
 
     # we store our three threads executing their object (aka the record methods) corresponding to the child of the
     # abstract class).

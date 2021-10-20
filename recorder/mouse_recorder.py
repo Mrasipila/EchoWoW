@@ -4,11 +4,12 @@ from pynput import mouse
 from recorder.abstract_recorder import Recorder
 
 
-class Mouse_recorder(mouse.Listener, Recorder):
+class Mouse_recorder(Recorder):
 
     def __init__(self):
-        self.instance = super(Mouse_recorder, self).__init__(
-            on_move=self.on_move, on_click=self.on_click, on_scroll=self.on_scroll)
+        self.instance = mouse.Listener(on_move=self.on_move,
+                                       on_click=self.on_click,
+                                       on_scroll=self.on_scroll)
 
     # return a thread of the executing processes
     def record(self):

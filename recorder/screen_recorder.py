@@ -8,8 +8,9 @@ import threading
 
 class Screen_Recorder(Recorder):
 
-    def __init__(self, recorder : Recorder):
+    def __init__(self):
         self.thread = threading.Thread(target=self.process)
+        self._stop_event = self.thread.Event()
 
     def record(self):
         return self.thread
