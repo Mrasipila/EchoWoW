@@ -8,6 +8,7 @@ class Recorder(ABC):
         self.data = None
         self.data_click = None
         self.data_scroll = None
+        self.data_move = None
 
     @abstractmethod
     def record(self):
