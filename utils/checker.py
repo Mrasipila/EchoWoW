@@ -14,7 +14,11 @@ class Checker:
         self.thread = threading.Thread(target=self.check)
         # saving the data for slave recorder the master recorder (screen) data saving task being already handled by
         # it's thread
-        self.csv_writer = CsvWriter(slaves_recorder)
+        # TODO : Implement savings of windows Info, Never move the window of the game once the program is
+        #  running, because the window info position is not saved in time. It is only saved at the programs
+        # startup we passing the slaves to save the keys and the master to save the window position of the window
+        # we want to record
+        self.csv_writer = CsvWriter(master_recorder, slaves_recorder)
         self.recorder = master_recorder
 
     # getter of the actual thread, used to start the Checker from the launcher
@@ -28,6 +32,7 @@ class Checker:
             # saves the data
             self.csv_writer.save_keyboard_data()
             self.csv_writer.save_mouse_data()
+            self.csv_writer.save_screen_wnd()
             # terminate the program process
             current_system_pid = os.getpid()
             this_system = psutil.Process(current_system_pid)

@@ -8,6 +8,7 @@ import csv
 class Keys_Recorder(Recorder):
 
     def __init__(self):
+        super().__init__()
         self.instance = keyboard.Listener(on_press=self.on_press)
         self.data = []
 
