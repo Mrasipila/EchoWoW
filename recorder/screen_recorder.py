@@ -1,11 +1,11 @@
 from recorder.abstract_recorder import Recorder
-from vidgear.gears import ScreenGear
-from vidgear.gears import WriteGear
 import cv2
 import threading
 from utils.window_info import WindowInfo
 from exceptions.unresolved_window import UnresolvedWindow
-
+from mss import mss
+from PIL import Image
+import numpy as np
 
 exit_key = 27  # ESC key
 
@@ -20,9 +20,8 @@ class Screen_Recorder(Recorder):
         self.window = None
 
         # look for window named "World Of Warcraft"
-        try:
-            self.window = WindowInfo("World of Warcraft")
-        except UnresolvedWindow:
+        self.window = WindowInfo("World of Warcraft")
+        if self.window is None:
             raise UnresolvedWindow
 
     def record(self):
@@ -36,83 +35,36 @@ class Screen_Recorder(Recorder):
 
     def process(self):
 
-        print(self.window.x)
-        print(self.window.y)
-        # define suitable FFmpeg input parameters
+        images = []
+        i = 0
+
+        # define suitable input parameters
         options = {"top": self.window.y, "left": self.window.x, "width": self.window.h, "height": self.window.w}
 
-        # define suitable FFmpeg output parameters
-        output_params = {"-r": 30}# "-c:v": "libx264", "-preset": "slow", "-crf": 0}
-
-        # open video stream with defined parameters
-        stream = ScreenGear(monitor=1, logging=True, **options).start()
-
-        # Define writer with defined parameters and suitable output filename for e.g. `Output.mp4`
-        writer = WriteGear(output_filename='Recording.mp4', logging=True) #, **output_params)
-
-        # Specify resolution
-        # resolution = (1280, 720)
-
-        # Specify video codec
-        # codec = cv2.VideoWriter_fourcc(*"mp4v")
-        # filename = "Recording.mp4"
-
-        # Specify frames rate.
-        # fps = 20.0
-
-        # Creating a VideoWriter object
-        # out = cv2.VideoWriter(filename, codec, fps, resolution)
-
-        # Create an Empty window
         cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
 
-        # Resize this window
-        # cv2.resizeWindow("Live", 1280, 720)
+        with mss() as sct:
+            while True:
+                screenShot = sct.grab(options)
+                img = Image.frombytes(
+                    'RGB',
+                    (screenShot.width, screenShot.height),
+                    screenShot.rgb,
+                )
 
-        while True:
-            # Take screenshot using PyAutoGUI
-            # this screenshot is of dimension the resolution of the monitor
-            # img = pyautogui.screenshot()
+                cv2.imwrite('video/' + str(i) + '.jpg', cv2.cvtColor(np.array(img.copy()), cv2.COLOR_RGB2BGR))
+                i += 1
 
-            frame = stream.read()
+                # Stop recording when we press 'ESC'
+                if cv2.waitKey(1) == exit_key:
+                    self.stopped = True
+                    break
 
-            # if frame is None:
-            #   frame = buff
+        out = cv2.VideoWriter('project.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 1, (1280, 720))
 
-            # buff = frame
-            # Convert the screenshot to a numpy array
-            # frame = np.array(img)
-
-            # print(frame.shape)
-
-            # print(frame.shape)
-            # Convert it from BGR(Blue, Green, Red) to
-            # RGB(Red, Green, Blue)
-            # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-            # Write it to the output file
-            # frame = cv2.resize(frame, resolution, interpolation=cv2.INTER_AREA)
-
-            # out.write(frame)
-
-            writer.write(frame)
-
-            # Display the recording screen
-            # cv2.imshow('Live', frame)
-
-            # Stop recording when we press 'ESC'
-            if cv2.waitKey(1) == exit_key:
-                self.stopped = True
-                break
-
-        # Release the Video writer
-        # out.release()
-
-        # safely close video stream
-        stream.stop()
-
-        # safely close writer
-        writer.close()
+        for i in range(len(images)):
+            out.write(cv2.cvtColor(np.array(images[i]), cv2.COLOR_RGB2BGR))
+        out.release()
 
         # Destroy all windows
         cv2.destroyAllWindows()
