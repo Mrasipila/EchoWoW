@@ -25,6 +25,12 @@ class WindowInfo:
             self.set_h(rect[2] - self.get_x())
             self.set_w(rect[3] - self.get_y())
             self.set_hwnd(hex(hwnd))
+            print(str(self.get_x()))
+            print(str(self.get_y()))
+            print(str(self.get_w()))
+            print(str(self.get_h()))
+            print(str(self.get_hwnd()))
+
 
     # getter of our class
 
