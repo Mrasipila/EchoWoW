@@ -7,6 +7,10 @@ class ImageToVideo:
     def __init__(self, nb_images, duration, resolution, left_crop, right_crop, top_crop, bottom_crop):
         # On definie le writer
         frame_rate = float(nb_images)/duration
+
+        print("framerate : " + str(frame_rate))
+        print("nb_image : " + str(nb_images))
+        print("duration : " + str(duration))
         self.out = cv2.VideoWriter('project.avi', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), round(frame_rate), resolution)
 
         # setting up crops
@@ -22,7 +26,7 @@ class ImageToVideo:
 
     def write_image(self, image):
         image = self.crop_image(image)
-        self.out.write(image)
+        self.out.write(cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR))
 
     def crop_image(self, image):
         return cv2.cvtColor(np.array(image.crop((self.crop_left,

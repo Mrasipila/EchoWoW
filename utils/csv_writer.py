@@ -6,7 +6,7 @@ import datetime
 
 class CsvWriter:
 
-    def __init__(self, master_recorder: Recorder, slave_recorders: list[Recorder]):
+    def __init__(self, master_recorder: Recorder = None, slave_recorders: list[Recorder] = None):
         self.recorders = slave_recorders
         self.master_recorder = master_recorder
 
@@ -16,7 +16,7 @@ class CsvWriter:
         self.filename_ms_scroll = open('csvfiles/mouse_scroll_data.csv', 'w+')
         self.filename_ms_move = open('csvfiles/mouse_move_data.csv', 'w+')
         self.filename_wnd_pos = open('csvfiles/wnd.csv', 'w+')
-        self.filename_frame_rate = open('csvfiles/framerate.csv' 'w+')
+        self.filename_frame_rate = open('csvfiles/frame_rate.csv', 'w+')
 
         # writers
         self.keyboard_wr = csv.writer(self.filename_kb, delimiter=' ')

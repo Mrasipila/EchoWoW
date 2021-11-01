@@ -13,18 +13,16 @@ class ImageLoader:
 
     def load_images(self, directory : str, duration : float):
         # directory must contain the path to the img_data file given by ImageSaver() class
-        isFile = os.path.isfile(directory + str("/img_data0.csv"))
+        isFile = os.path.isfile(directory + str("/img_data0.jpg"))
         if isFile is False:
-            print("ERROR : no img csv file found in directory : refer to class ImageLoader")
+            print("ERROR : no img file found in directory : refer to class ImageLoader")
             return
         else:
             self.set_image_number(len([img_f for img_f in os.listdir(directory)]))
 
             # retrieving image width and height to setup crop variable of ImageToVideo class
-            array = np.loadtxt(directory + f"/img_data0.csv")
-            array = array.reshape(self.get_shape())
-            im = Image.fromarray(np.uint8(array))
-            width, height = im.size
+            image = Image.open(directory + "/img_data0.jpg")
+            width, height = image.size
 
             # instantiate the ImageToVideo class
             self.image_to_video = ImageToVideo(nb_images=self.get_image_number(),
@@ -37,12 +35,9 @@ class ImageLoader:
 
             # converting the image loaded to a video
             for i in range(self.get_image_number()):
-                array = np.loadtxt(directory + f"/img_data{i}.csv")
-                array = array.reshape(self.get_shape())
-
-                # change it to PIL Image for the use of the crop() method
-                im = Image.fromarray(np.uint8(array))
-                self.image_to_video.write_image(im)
+                # writing image
+                image = Image.open(directory + f"/img_data{i}.csv")
+                self.image_to_video.write_image(image)
             self.image_to_video.end_job()
 
 

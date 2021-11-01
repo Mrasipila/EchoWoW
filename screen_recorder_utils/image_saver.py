@@ -7,8 +7,8 @@ class ImageSaver():
         self.counter = 0
         self.shape = None
 
-    def store_data(self, array):
-        np.savetxt(f"csvfiles/img_data/img_data{self.get_counter()}.csv", array.flatten(), delimiter=';')
+    def store_data(self, image):
+        image.save(f"csvfiles/img_data/img_data{self.get_counter()}.jpg")
         self.increment()
 
     def increment(self):
