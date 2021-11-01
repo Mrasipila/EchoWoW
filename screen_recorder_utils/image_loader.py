@@ -5,13 +5,13 @@ from screen_recorder_utils.image_to_video import ImageToVideo
 
 class ImageLoader:
 
-    def __init__(self, recording_time):
+    def __init__(self):
         self.image_number = 0
         self.shape = None
         self.image_to_video = None
 
 
-    def load_images(self, directory : str, duration):
+    def load_images(self, directory : str, duration : float):
         # directory must contain the path to the img_data file given by ImageSaver() class
         isFile = os.path.isfile(directory + str("/img_data0.csv"))
         if isFile is False:
@@ -27,7 +27,8 @@ class ImageLoader:
             width, height = im.size
 
             # instantiate the ImageToVideo class
-            self.image_to_video = ImageToVideo(fr=float(self.get_image_number())/duration,
+            self.image_to_video = ImageToVideo(nb_images=self.get_image_number(),
+                                               duration=duration,
                                                resolution=(1280, 720),
                                                left_crop=8,
                                                right_crop=width-8,
