@@ -68,7 +68,6 @@ class Screen_Recorder(Recorder):
                 (screenShot.width, screenShot.height),
                 screenShot.rgb,
             )
-
             self.image_loader.set_shape(cv2.cvtColor(np.array(img.copy()),  cv2.COLOR_RGB2BGR).shape)
 
             while True:
