@@ -4,4 +4,5 @@ Screen, mouse and keyboard recorder
 
 ### Architecture respecting SOLID paradigm
 
-![EchoWoW drawio](https://github.com/Mrasipila/EchoWoW/assets/30113273/d3017fa9-f542-472f-a5e7-b1fb4de99c5a)
+![image](https://github.com/Mrasipila/EchoWoW/assets/30113273/a3bcf805-f3e4-4057-9bca-53c070ab86ad)
+
