@@ -1,7 +1,7 @@
 # EchoWoW
 
 Screen, mouse and keyboard recorder
-
+The program makes use of multithreading to handle the different recorder in parallel
 ### Usage 
 
 In ```EchoWoW/recorder/screen_recorder.py``` change ```WindowInfo("XXX")``` with the name of the window you want to record
